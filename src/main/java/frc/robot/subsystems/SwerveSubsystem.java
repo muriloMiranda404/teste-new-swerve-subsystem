@@ -104,8 +104,8 @@ public class SwerveSubsystem extends SubsystemBase{
                         swerveDrive.setChassisSpeeds(speeds);
                       }}, 
                       new PPHolonomicDriveController(
-                        new PIDConstants(0.03, 0.01, 0.0), 
-                        new PIDConstants(0.03, 0.0, 0.04)),
+                        new PIDConstants(0.1, 0.0, 0.0), 
+                        new PIDConstants(0.2, 0.0, 0.0)),
                       config, 
                       () -> {
                         
