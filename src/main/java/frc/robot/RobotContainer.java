@@ -30,9 +30,9 @@ public class RobotContainer {
   public RobotContainer() {
 
     subsystem.setDefaultCommand(subsystem.driveCommand(
-      () -> MathUtil.applyDeadband(joystick.getLeftY() * -1, 0),
-      () -> MathUtil.applyDeadband(joystick.getLeftX() * -1, 0),
-      () -> MathUtil.applyDeadband(joystick.getRightX() * -1, 0)
+      () -> MathUtil.applyDeadband(joystick.getLeftY(), 0),
+      () -> MathUtil.applyDeadband(joystick.getLeftX(), 0),
+      () -> MathUtil.applyDeadband(joystick.getRightX(), 0)
       ));
     autonomousCommands.configureTest();
     configureBindings();

@@ -58,6 +58,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     m_robotContainer.setMotorBrake(true);
+    m_robotContainer.subsystem.resetDriveEncoder();
     m_robotContainer.subsystem.resetOdometry(new Pose2d(6.186, 4.115, Rotation2d.fromDegrees(179.506)));
 
     // schedule the autonomous command (example)

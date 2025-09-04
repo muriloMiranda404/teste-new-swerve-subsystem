@@ -104,7 +104,7 @@ public class SwerveSubsystem extends SubsystemBase{
                         swerveDrive.setChassisSpeeds(speeds);
                       }}, 
                       new PPHolonomicDriveController(
-                        new PIDConstants(0.03, 0, 0.0), 
+                        new PIDConstants(0.03, 0.01, 0.0), 
                         new PIDConstants(0.03, 0.0, 0.04)),
                       config, 
                       () -> {
@@ -124,6 +124,10 @@ public class SwerveSubsystem extends SubsystemBase{
 
     public void resetOdometry(Pose2d pose2d){
         swerveDrive.resetOdometry(pose2d);
+    }
+
+    public void resetDriveEncoder(){
+        swerveDrive.resetDriveEncoders();
     }
 
     public ChassisSpeeds getRobotRelativeSpeeds(){
