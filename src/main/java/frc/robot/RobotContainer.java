@@ -1,59 +1,90 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
-import java.io.File;
-
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.path.PathPlannerPath;
-
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.swerve;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import frc.robot.Constants.Controllers;
+import frc.robot.Constants.Outros;
+import frc.robot.commands.IntakeSpeedCommand;
+import frc.robot.commands.ResetPigeon;
+import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.LimelightConfig;
+import frc.robot.subsystems.SuperStructure;
 import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.subsystems.SuperStructure.StatesToScore;
+import frc.robot.subsystems.utils.DriverController;
+import frc.robot.subsystems.utils.IntakeController;
 
 
 public class RobotContainer {
 
-  SwerveSubsystem subsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
-  XboxController joystick = new XboxController(0);
-  AutonomousCommands autonomousCommands= new AutonomousCommands();
+  private DriverController driverController;
+  private IntakeController intakeController;
+
+  private LimelightConfig limelightConfig;
+
+  private SwerveSubsystem swerveSubsystem;
+
+  private IntakeSubsystem intakeSubsystem;
+  private ElevatorSubsystem elevatorSubsystem;
+  private SuperStructure superStructure;
+
+  private AutonomousCommands autonomousCommands;
 
   public RobotContainer() {
 
-    subsystem.setDefaultCommand(subsystem.driveCommand(
-      () -> MathUtil.applyDeadband(joystick.getLeftY(), 0),
-      () -> MathUtil.applyDeadband(joystick.getLeftX(), 0),
-      () -> MathUtil.applyDeadband(joystick.getRightX(), 0)
-      ));
-    autonomousCommands.configureTest();
-    configureBindings();
+    this.driverController = DriverController.getInstance();
+    this.intakeController = IntakeController.getInstance();
+
+    this.limelightConfig = LimelightConfig.getInstance();
+
+    this.swerveSubsystem = SwerveSubsystem.getInstance();
+
+    this.elevatorSubsystem = ElevatorSubsystem.getInstance();
+    this.intakeSubsystem = IntakeSubsystem.getInstance();
+    this.superStructure = SuperStructure.getInstance();
+    
+    this.autonomousCommands = new AutonomousCommands();
+    
+    swerveSubsystem.setDefaultCommand(swerveSubsystem.driveRobot(
+      () -> MathUtil.applyDeadband(driverController.ConfigureInputs(1), Controllers.DEADBAND), 
+      () -> MathUtil.applyDeadband(driverController.ConfigureInputs(2), Controllers.DEADBAND), 
+      () -> MathUtil.applyDeadband(driverController.ConfigureInputs(3), Controllers.DEADBAND),
+      true));
+
+      configureAuto();
+      configureBindings();
   }
 
+  
   private void configureBindings() {
-
+    
+      intakeController.L1Button().onTrue(new ParallelCommandGroup(
+        new IntakeSpeedCommand(true),
+        superStructure.ScoreRobot(StatesToScore.L1)
+      ));
+      intakeController.L2Button().onTrue(superStructure.ScoreRobot(StatesToScore.L2));
+      intakeController.L3Button().onTrue(superStructure.ScoreRobot(StatesToScore.L3));
+      intakeController.L4Button().onTrue(superStructure.ScoreRobot(StatesToScore.L4));
+      
+      intakeController.throwCoral().whileTrue(new IntakeSpeedCommand(0.8));
+      intakeController.Algae_L2().onTrue(superStructure.ScoreRobot(StatesToScore.ALGAE_L2));
+      intakeController.Algae_L3().onTrue(superStructure.ScoreRobot(StatesToScore.ALGAE_L3));
+      intakeController.Processador().onTrue(superStructure.ScoreRobot(StatesToScore.PROCESSADOR));
+      
+      driverController.resetPigeon().onTrue(new ResetPigeon());
   }
-
+    
+  private void configureAuto() {
+    this.autonomousCommands.configureAllCommands();
+  }
+  
  public Command getAutonomousCommand() {
-    try{
-        PathPlannerPath path = PathPlannerPath.fromPathFile(swerve.AUTO);
-
-        return AutoBuilder.followPath(path);
-    } catch (Exception e) {
-        DriverStation.reportError("Big oops: " + e.getMessage(), e.getStackTrace());
-        return Commands.none();
-    }
+    return swerveSubsystem.getAutonomousCommand(Outros.AUTO, true);
   }
 
   public void setMotorBrake(boolean brake){
-    subsystem.setMotorBrake(brake);
+    swerveSubsystem.setMotorBrake(brake);
   }
 }

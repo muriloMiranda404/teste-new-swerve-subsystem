@@ -4,11 +4,11 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -30,6 +30,10 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
   }
 
+  @Override
+  public void robotInit() {
+
+  }
   /**
    * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics
    * that you want ran during disabled, autonomous, teleoperated and test.
@@ -58,7 +62,6 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     m_robotContainer.setMotorBrake(true);
-    m_robotContainer.subsystem.resetOdometry(new Pose2d(2.074, 5.817, Rotation2d.fromDegrees(179.506)));
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {

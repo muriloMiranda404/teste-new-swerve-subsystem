@@ -1,17 +1,23 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.NamedCommands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-public class AutonomousCommands {
+import frc.robot.commands.autonomousCommands.UpToL2;
+import frc.robot.subsystems.SuperStructure;
 
-    public AutonomousCommands(){
+public class AutonomousCommands{
 
-    }
+  SuperStructure superStructure;
 
-    public void configureTest(){
-        NamedCommands.registerCommand("PRINT", new InstantCommand(() ->{
-            System.out.println("print de autonomous");
-        }));
-    }
+  public AutonomousCommands(){
+    this.superStructure = SuperStructure.getInstance();
+  }
+
+  public void configureAllCommands(){
+    this.configureCoral(this.superStructure);
+  }
+
+  private void configureCoral(SuperStructure superStructure){
+    NamedCommands.registerCommand("L2", new UpToL2(superStructure));
+  }
 }
