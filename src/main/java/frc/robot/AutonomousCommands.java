@@ -4,6 +4,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 
 import frc.robot.commands.autonomousCommands.UpToL2;
 import frc.robot.subsystems.SuperStructure;
+import frc.robot.subsystems.SuperStructure.StatesToScore;
 
 public class AutonomousCommands{
 
@@ -18,6 +19,6 @@ public class AutonomousCommands{
   }
 
   private void configureCoral(SuperStructure superStructure){
-    NamedCommands.registerCommand("L2", new UpToL2(superStructure));
+    NamedCommands.registerCommand("L2", superStructure.ScoreRobot(StatesToScore.L2));
   }
 }

@@ -18,34 +18,35 @@ import frc.robot.subsystems.utils.IntakeController;
 
 
 public class RobotContainer {
-
+  
+  private AutonomousCommands autonomousCommands;
+  
   private DriverController driverController;
   private IntakeController intakeController;
-
+  
   private LimelightConfig limelightConfig;
-
+  
   private SwerveSubsystem swerveSubsystem;
-
+  
   private IntakeSubsystem intakeSubsystem;
   private ElevatorSubsystem elevatorSubsystem;
   private SuperStructure superStructure;
 
-  private AutonomousCommands autonomousCommands;
-
   public RobotContainer() {
-
+    
+    this.autonomousCommands = new AutonomousCommands();
+    configureAuto();
+    
     this.driverController = DriverController.getInstance();
     this.intakeController = IntakeController.getInstance();
-
+    
     this.limelightConfig = LimelightConfig.getInstance();
-
+    
     this.swerveSubsystem = SwerveSubsystem.getInstance();
-
+    
     this.elevatorSubsystem = ElevatorSubsystem.getInstance();
     this.intakeSubsystem = IntakeSubsystem.getInstance();
     this.superStructure = SuperStructure.getInstance();
-    
-    this.autonomousCommands = new AutonomousCommands();
     
     swerveSubsystem.setDefaultCommand(swerveSubsystem.driveRobot(
       () -> MathUtil.applyDeadband(driverController.ConfigureInputs(1), Controllers.DEADBAND), 
@@ -53,7 +54,6 @@ public class RobotContainer {
       () -> MathUtil.applyDeadband(driverController.ConfigureInputs(3), Controllers.DEADBAND),
       true));
 
-      configureAuto();
       configureBindings();
   }
 
