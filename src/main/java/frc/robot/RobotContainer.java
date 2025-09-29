@@ -14,16 +14,17 @@ import frc.robot.subsystems.LimelightConfig;
 import frc.robot.subsystems.SuperStructure;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.subsystems.SuperStructure.StatesToScore;
+import frc.robot.subsystems.chooses.Choose;
 import frc.robot.subsystems.utils.DriverController;
-import frc.robot.subsystems.utils.IntakeController;
+import frc.robot.subsystems.utils.KeyboardMechanism;
+import frc.robot.subsystems.utils.MechanismJoystick;
 
 
 public class RobotContainer {
-  
-  private AutonomousCommands autonomousCommands;
-  
+    
   private DriverController driverController;
-  private IntakeController intakeController;
+  private KeyboardMechanism keyBoardControl;
+  private MechanismJoystick mechanismJoystick;
   
   private LimelightConfig limelightConfig;
   
@@ -34,12 +35,13 @@ public class RobotContainer {
   
   private SuperStructure superStructure;
 
+  private Choose choose;
+
   public RobotContainer() {
-    
-    this.autonomousCommands = new AutonomousCommands();
-    
+        
     this.driverController = DriverController.getInstance();
-    this.intakeController = IntakeController.getInstance();
+    this.keyBoardControl = KeyboardMechanism.getInstance();
+    this.mechanismJoystick = MechanismJoystick.getInstance();
     
     this.limelightConfig = LimelightConfig.getInstance();
     
@@ -49,31 +51,55 @@ public class RobotContainer {
     this.intakeSubsystem = IntakeSubsystem.getInstance();
     this.superStructure = SuperStructure.getInstance();
     
+    this.choose = Choose.getInstance();
+
+    if(choose.getChoosed() == "arduino"){
+
+      configureKeyBoardMechanismBiding();
+    
+    } else if(choose.getChoosed() == "joystick"){
+
+      intakeSubsystem.setDefaultCommand(intakeSubsystem.setJoystickControl(mechanismJoystick.throwCoral()));
+      configureJoystickMechanismBindings();
+    
+    }
+
     swerveSubsystem.setDefaultCommand(swerveSubsystem.driveRobot(
       () -> MathUtil.applyDeadband(driverController.ConfigureInputs(1), Controllers.DEADBAND), 
       () -> MathUtil.applyDeadband(driverController.ConfigureInputs(2), Controllers.DEADBAND), 
       () -> MathUtil.applyDeadband(driverController.ConfigureInputs(3), Controllers.DEADBAND),
       true));
 
-      configureMechanismBindings();
       configureDriveBindings();
   }
 
+  private void configureJoystickMechanismBindings(){
+    mechanismJoystick.L1Button().onTrue(new ParallelCommandGroup(
+      superStructure.ScoreRobot(StatesToScore.L1),
+      new IntakeSpeedCommand(true)
+    ));
+    mechanismJoystick.L2Button().onTrue(superStructure.ScoreRobot(StatesToScore.L2));
+    mechanismJoystick.L3Button().onTrue(superStructure.ScoreRobot(StatesToScore.L3));
+    mechanismJoystick.L4Button().onTrue(superStructure.ScoreRobot(StatesToScore.L4));
+
+    mechanismJoystick.Algae_L2().onTrue(superStructure.ScoreRobot(StatesToScore.ALGAE_L2));
+    mechanismJoystick.Algae_L3().onTrue(superStructure.ScoreRobot(StatesToScore.ALGAE_L3));
+    mechanismJoystick.Processador().onTrue(superStructure.ScoreRobot(StatesToScore.PROCESSADOR));
+  }
   
-  private void configureMechanismBindings() {
-    intakeController.L1Button().onTrue(new ParallelCommandGroup(
+  private void configureKeyBoardMechanismBiding() {
+    keyBoardControl.L1Button().onTrue(new ParallelCommandGroup(
       new IntakeSpeedCommand(true),
       superStructure.ScoreRobot(StatesToScore.L1)
     ));
-    intakeController.L2Button().onTrue(superStructure.ScoreRobot(StatesToScore.L2));
-    intakeController.L3Button().onTrue(superStructure.ScoreRobot(StatesToScore.L3));
-    intakeController.L4Button().onTrue(superStructure.ScoreRobot(StatesToScore.L4));
+    keyBoardControl.L2Button().onTrue(superStructure.ScoreRobot(StatesToScore.L2));
+    keyBoardControl.L3Button().onTrue(superStructure.ScoreRobot(StatesToScore.L3));
+    keyBoardControl.L4Button().onTrue(superStructure.ScoreRobot(StatesToScore.L4));
     
-    intakeController.throwCoral().whileTrue(new IntakeSpeedCommand(0.8));
-    intakeController.Algae_L2().onTrue(superStructure.ScoreRobot(StatesToScore.ALGAE_L2));
-    intakeController.Algae_L3().onTrue(superStructure.ScoreRobot(StatesToScore.ALGAE_L3));
-    intakeController.Processador().onTrue(superStructure.ScoreRobot(StatesToScore.PROCESSADOR));
-    
+    keyBoardControl.throwCoral().whileTrue(new IntakeSpeedCommand(0.8));
+    keyBoardControl.AlgaeL2().onTrue(superStructure.ScoreRobot(StatesToScore.ALGAE_L2));
+    keyBoardControl.AlgaeL3().onTrue(superStructure.ScoreRobot(StatesToScore.ALGAE_L3));
+    keyBoardControl.Processador().onTrue(superStructure.ScoreRobot(StatesToScore.PROCESSADOR));
   }
   
   private void configureDriveBindings(){

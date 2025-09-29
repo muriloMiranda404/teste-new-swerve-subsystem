@@ -3,7 +3,7 @@ package frc.robot.subsystems.utils;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-public interface IntakeControllerIO {
+public interface MechanismJoystickIO {
  
     Trigger L1Button();
 
@@ -19,9 +19,5 @@ public interface IntakeControllerIO {
 
     Trigger Algae_L3();
 
-    Trigger getCoral();
-
-    Trigger throwCoral();
-
-    GenericHID getHID();
+    double throwCoral();
 }

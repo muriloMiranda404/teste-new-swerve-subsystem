@@ -235,8 +235,9 @@ public class SwerveSubsystem extends SubsystemBase{
                                                                                                               omega.getAsDouble());
 
 
-        
-        state = swerveDrive.kinematics.toSwerveModuleStates(speed);
+        ChassisSpeeds distrize = ChassisSpeeds.discretize(speed, td);
+
+        state = swerveDrive.kinematics.toSwerveModuleStates(distrize);
         SwerveDriveKinematics.desaturateWheelSpeeds(state, swerve.MAX_SPEED);
     
         modules = swerveDrive.getModules();

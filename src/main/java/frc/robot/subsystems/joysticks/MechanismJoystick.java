@@ -5,29 +5,24 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.Controllers;
 
-public class IntakeController implements IntakeControllerIO{
+public class MechanismJoystick implements MechanismJoystickIO{
     private CommandXboxController controller;
 
-    public static IntakeController mInstance = null;
+    public static MechanismJoystick mInstance = null;
 
-    private IntakeController(){
+    private MechanismJoystick(){
         this.controller = new CommandXboxController(Controllers.INTAKE_CONTROLLER);
     }
-    public static IntakeController getInstance(){
+    public static MechanismJoystick getInstance(){
         if(mInstance == null){
-            mInstance = new IntakeController();
+            mInstance = new MechanismJoystick();
         }
         return mInstance;
     }
 
     @Override
-    public GenericHID getHID() {
-        return controller.getHID();
-    }
-
-    @Override
     public Trigger L1Button() {
-       return controller.button(1);
+       return controller.a();
     }
 
     @Override
@@ -37,36 +32,31 @@ public class IntakeController implements IntakeControllerIO{
 
     @Override
     public Trigger L3Button() {
-       return controller.x();
+       return controller.y();
     }
 
     @Override
     public Trigger L4Button() {
-        return controller.y();
-    }
-
-    @Override
-    public Trigger getCoral() {
-        return controller.button(5);
-    }
-
-    @Override
-    public Trigger throwCoral() {
-        return controller.rightBumper();
+        return controller.x();
     }
 
     @Override
     public Trigger Processador() {
-       return controller.button(7);
+       return controller.rightBumper().and(controller.leftBumper());
     }
 
     @Override
     public Trigger Algae_L2() {
-        return controller.button(8);
+        return controller.rightBumper();
     }
 
     @Override
     public Trigger Algae_L3() {
-        return controller.button(9);
+        return controller.leftBumper();
+    }
+
+    @Override
+    public double throwCoral(){
+        return controller.getRightTriggerAxis() - controller.getLeftTriggerAxis();
     }
 }
