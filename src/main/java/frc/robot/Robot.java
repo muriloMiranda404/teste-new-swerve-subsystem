@@ -4,11 +4,12 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.hardware.Pigeon2;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -19,6 +20,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private final RobotContainer m_robotContainer;
+  Pigeon2 pigeon = new Pigeon2(9);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -32,7 +34,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-
+    CameraServer.startAutomaticCapture();
+    pigeon.reset();
   }
   /**
    * This function is called every 20 ms, no matter the mode. Use this for items like diagnosticsP

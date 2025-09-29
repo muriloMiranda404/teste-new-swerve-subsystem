@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.AutonomousCommands;
 import frc.robot.Constants.swerve;
 import swervelib.SwerveDrive;
 import swervelib.SwerveModule;
@@ -52,6 +53,7 @@ public class SwerveSubsystem extends SubsystemBase{
         } catch(Exception e){
             System.out.println("erro ao criar swerve drive");
         } finally{
+            configureAutoCommands();
             limelightConfig = LimelightConfig.getInstance();
             pigeon2 = new Pigeon2(9);
 
@@ -78,6 +80,10 @@ public class SwerveSubsystem extends SubsystemBase{
             mInstance = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
         }
         return mInstance;
+    }
+
+    private void configureAutoCommands(){
+        AutonomousCommands.configureAllCommands();
     }
 
     @Override
@@ -218,6 +224,7 @@ public class SwerveSubsystem extends SubsystemBase{
     public Command driveRobot(DoubleSupplier x, DoubleSupplier y, DoubleSupplier omega, boolean fieldOriented){
         return run(() ->{
     
+        double td = 0.002;
         ChassisSpeeds speed = fieldOriented == true ? ChassisSpeeds.fromFieldRelativeSpeeds(x.getAsDouble() * swerveDrive.getMaximumChassisVelocity(), 
                                                                                             y.getAsDouble() * swerveDrive.getMaximumChassisVelocity(),
                                                                                             omega.getAsDouble() * swerveDrive.getMaximumChassisAngularVelocity(),
@@ -226,7 +233,9 @@ public class SwerveSubsystem extends SubsystemBase{
                                                                                             new ChassisSpeeds(x.getAsDouble(),
                                                                                                               y.getAsDouble(),
                                                                                                               omega.getAsDouble());
-    
+
+
+        
         state = swerveDrive.kinematics.toSwerveModuleStates(speed);
         SwerveDriveKinematics.desaturateWheelSpeeds(state, swerve.MAX_SPEED);
     

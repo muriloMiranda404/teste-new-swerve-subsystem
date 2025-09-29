@@ -19,4 +19,8 @@ public interface DriverControllerIO {
     double ConfigureInputs( int choose);
 
     Trigger alingToReefButton();
+
+    Trigger turn45();
+
+    Trigger turn315();
 }

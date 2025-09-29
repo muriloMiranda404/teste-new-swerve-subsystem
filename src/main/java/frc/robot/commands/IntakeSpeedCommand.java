@@ -13,7 +13,7 @@ public class IntakeSpeedCommand extends Command{
     }
 
     public IntakeSpeedCommand(boolean stop){
-        this( 0.2, true);
+        this( 0.3, true);
     }
 
     private IntakeSpeedCommand(double speed, boolean stop){

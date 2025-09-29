@@ -7,6 +7,7 @@ import frc.robot.Constants.Controllers;
 import frc.robot.Constants.Outros;
 import frc.robot.commands.IntakeSpeedCommand;
 import frc.robot.commands.ResetPigeon;
+import frc.robot.commands.TurnRobot;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LimelightConfig;
@@ -27,15 +28,15 @@ public class RobotContainer {
   private LimelightConfig limelightConfig;
   
   private SwerveSubsystem swerveSubsystem;
-  
+   
   private IntakeSubsystem intakeSubsystem;
   private ElevatorSubsystem elevatorSubsystem;
+  
   private SuperStructure superStructure;
 
   public RobotContainer() {
     
     this.autonomousCommands = new AutonomousCommands();
-    configureAuto();
     
     this.driverController = DriverController.getInstance();
     this.intakeController = IntakeController.getInstance();
@@ -54,30 +55,32 @@ public class RobotContainer {
       () -> MathUtil.applyDeadband(driverController.ConfigureInputs(3), Controllers.DEADBAND),
       true));
 
-      configureBindings();
+      configureMechanismBindings();
+      configureDriveBindings();
   }
 
   
-  private void configureBindings() {
+  private void configureMechanismBindings() {
+    intakeController.L1Button().onTrue(new ParallelCommandGroup(
+      new IntakeSpeedCommand(true),
+      superStructure.ScoreRobot(StatesToScore.L1)
+    ));
+    intakeController.L2Button().onTrue(superStructure.ScoreRobot(StatesToScore.L2));
+    intakeController.L3Button().onTrue(superStructure.ScoreRobot(StatesToScore.L3));
+    intakeController.L4Button().onTrue(superStructure.ScoreRobot(StatesToScore.L4));
     
-      intakeController.L1Button().onTrue(new ParallelCommandGroup(
-        new IntakeSpeedCommand(true),
-        superStructure.ScoreRobot(StatesToScore.L1)
-      ));
-      intakeController.L2Button().onTrue(superStructure.ScoreRobot(StatesToScore.L2));
-      intakeController.L3Button().onTrue(superStructure.ScoreRobot(StatesToScore.L3));
-      intakeController.L4Button().onTrue(superStructure.ScoreRobot(StatesToScore.L4));
-      
-      intakeController.throwCoral().whileTrue(new IntakeSpeedCommand(0.8));
-      intakeController.Algae_L2().onTrue(superStructure.ScoreRobot(StatesToScore.ALGAE_L2));
-      intakeController.Algae_L3().onTrue(superStructure.ScoreRobot(StatesToScore.ALGAE_L3));
-      intakeController.Processador().onTrue(superStructure.ScoreRobot(StatesToScore.PROCESSADOR));
-      
-      driverController.resetPigeon().onTrue(new ResetPigeon());
+    intakeController.throwCoral().whileTrue(new IntakeSpeedCommand(0.8));
+    intakeController.Algae_L2().onTrue(superStructure.ScoreRobot(StatesToScore.ALGAE_L2));
+    intakeController.Algae_L3().onTrue(superStructure.ScoreRobot(StatesToScore.ALGAE_L3));
+    intakeController.Processador().onTrue(superStructure.ScoreRobot(StatesToScore.PROCESSADOR));
+    
   }
-    
-  private void configureAuto() {
-    this.autonomousCommands.configureAllCommands();
+  
+  private void configureDriveBindings(){
+    driverController.resetPigeon().onTrue(new ResetPigeon());
+
+    driverController.turn45().onTrue(new TurnRobot( 45));
+    driverController.turn315().onTrue(new TurnRobot(-45));    
   }
   
  public Command getAutonomousCommand() {

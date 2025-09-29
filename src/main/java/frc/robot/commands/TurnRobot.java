@@ -15,18 +15,18 @@ public class TurnRobot extends Command{
 
     PIDController controller;
 
-    public TurnRobot(SwerveSubsystem swerve, Pigeon2 pigeon2, double angulo){
-        this.swerve = swerve;
-        this.pigeon2 = pigeon2;
-        this.angulo = angulo;
+    public TurnRobot(double angulo){
+        this.swerve = SwerveSubsystem.getInstance();
+        this.pigeon2 = new Pigeon2(9);
         this.controller = new PIDController(0.01, 0, 0);
+        this.angulo = angulo;
         addRequirements(swerve);
     }
 
     @Override
     public void initialize() {
         System.out.println("mudando posição para: " +  angulo);
-        controller.setTolerance(1.0);
+        controller.setTolerance(2.0);
     }
 
     @Override
@@ -35,12 +35,14 @@ public class TurnRobot extends Command{
         try{
         double atual = pigeon2.getYaw().getValueAsDouble();
         double output = controller.calculate(atual, angulo);
+        
+        swerve.drive(new Translation2d(0, 0), output, true);
 
-        if(atual == angulo || atual > angulo){
+        if(atual >= angulo){
             swerve.drive(new Translation2d(0, 0), 0, true);
+            super.cancel();
         }
 
-        swerve.drive(new Translation2d(0, 0), output, true);
     } catch(Exception e){
         System.out.println("erro o mudar angulação: " + e.getMessage());
     }

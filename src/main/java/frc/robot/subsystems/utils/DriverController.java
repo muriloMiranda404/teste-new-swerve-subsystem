@@ -106,4 +106,12 @@ public class DriverController implements DriverControllerIO{
     public Trigger alingToReefButton() {
         return controller.rightBumper();
     }
+
+    public Trigger turn45(){
+        return controller.a();
+    }
+
+    public Trigger turn315(){
+        return controller.b();
+    }
 }

@@ -17,7 +17,7 @@ public class Constants{
   }
 
   public static final class swerve{
-    public static final double MAX_SPEED = 4.0;
+    public static final double MAX_SPEED = 2.0;
   }
 
   public static final class Intake{
