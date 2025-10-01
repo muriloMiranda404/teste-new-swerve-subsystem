@@ -5,8 +5,8 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.LimelightConfig;
-import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.subsystems.swerve.SwerveSubsystem;
+import frc.robot.subsystems.vision.LimelightConfig;
 
 public class AlingToTarget extends Command {
     
@@ -24,12 +24,11 @@ public class AlingToTarget extends Command {
     private static final double kD_ROTATION = 0.005;
     private static final double TOLERANCIA_ROTATION = 0.2;
     
-    private static final double kP_X = 0.11;  // Ajuste esses valores conforme necessário
+    private static final double kP_X = 0.11;
     private static final double kI_X = 0.01;
     private static final double kD_X = 0.005;
     private static final double TOLERANCIA_X = 0.1;
     
-    // private static final double TOLERANCIA_ALINHAMENTO = 0.6;
     private static final int MAX_TENTATIVAS = 3;
     private static final double MAX_CORRECAO = 8;
     private static final double ZONA_MORTA = 0.05;
@@ -43,7 +42,7 @@ public class AlingToTarget extends Command {
     private double ultimaTx = 0.0;
     private double ultimoTempoMudanca = 0.0;
     private final Timer timer = new Timer();
-    boolean automaticSetpoint;
+    private boolean automaticSetpoint;
 
     
     private double ajust(double ajustado){
@@ -84,15 +83,19 @@ public class AlingToTarget extends Command {
     @Override
     public void initialize() {
         try {
-
             if(automaticSetpoint == true){
                 double[] cordenadas = limelight.getAprilTagCordenates();
     
                 double tx = cordenadas[0];
                 double ty = cordenadas[1];
-    
+
+                if(!Double.isNaN(tx) && !Double.isNaN(ty)){
                 setpointX = tx - 0.6;
                 setpointY = ty;
+                } else {
+                    System.out.println("erro ao puxar os valores");
+                    return;
+                }
             }
     
             rotationController.reset();

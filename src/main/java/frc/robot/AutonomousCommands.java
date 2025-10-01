@@ -1,22 +1,23 @@
 package frc.robot;
 
-import com.pathplanner.lib.auto.NamedCommands;
-import frc.robot.subsystems.SuperStructure;
-import frc.robot.subsystems.SuperStructure.StatesToScore;
+ import com.pathplanner.lib.auto.NamedCommands;
 
-public class AutonomousCommands{
+ import frc.robot.subsystems.mechanism.SuperStructure;
+ import frc.robot.subsystems.mechanism.SuperStructure.StatesToScore;
 
-  private static SuperStructure superStructure;
+ public class AutonomousCommands{
 
-  public AutonomousCommands(){
-    AutonomousCommands.superStructure = SuperStructure.getInstance();
-  }
+   private static SuperStructure superStructure;
 
-  public static void configureAllCommands(){
-    configureCoral(AutonomousCommands.superStructure);
-  }
+   public AutonomousCommands(){
+     AutonomousCommands.superStructure = SuperStructure.getInstance();
+   }
 
-  private static void configureCoral(SuperStructure superStructure){
-    NamedCommands.registerCommand("L2", superStructure.ScoreRobot(StatesToScore.L2));
-  }
+   public static void configureAllCommands(){
+     configureCoral(AutonomousCommands.superStructure);
+   }
+
+   private static void configureCoral(SuperStructure superStructure){
+     NamedCommands.registerCommand("L2", superStructure.ScoreRobot(StatesToScore.L2));
+   }
 }

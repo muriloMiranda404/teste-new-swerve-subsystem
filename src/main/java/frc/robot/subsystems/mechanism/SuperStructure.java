@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.mechanism;
 
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.LEDPattern.GradientType;
@@ -7,6 +7,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.Elevator.ElevatorPositions;
 import frc.robot.Constants.Intake.IntakePositions;
+import frc.robot.subsystems.Led.LedSubsystem;
+import frc.robot.subsystems.mechanism.elevator.ElevatorSubsystem;
+import frc.robot.subsystems.mechanism.intake.IntakeSubsystem;
 
 public class SuperStructure extends SubsystemBase{
     

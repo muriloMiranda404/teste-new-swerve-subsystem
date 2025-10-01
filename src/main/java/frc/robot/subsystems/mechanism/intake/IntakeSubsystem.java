@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.mechanism.intake;
 
 import com.revrobotics.spark.SparkBase;
 import com.revrobotics.spark.SparkMax;
@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.Intake;
+import frc.robot.subsystems.mechanism.elevator.ElevatorSubsystem;
 
 public class IntakeSubsystem extends SubsystemBase{
     
@@ -119,7 +120,7 @@ public class IntakeSubsystem extends SubsystemBase{
 
     public Command setJoystickControl(double speed){
         return run(() ->{
-            setSpeed(speed);
+            getCoral.set(speed);
         });
     }
 

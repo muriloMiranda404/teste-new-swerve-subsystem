@@ -1,7 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.mechanism.intake.IntakeSubsystem;
 
 public class IntakeSpeedCommand extends Command{
     IntakeSubsystem intake;

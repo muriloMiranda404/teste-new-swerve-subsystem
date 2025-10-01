@@ -1,10 +1,10 @@
-package frc.robot.subsystems.utils;
+package frc.robot.subsystems.joysticks;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.subsystems.swerve.SwerveSubsystem;
 
 public class DriverController implements DriverControllerIO{
 
@@ -29,12 +29,6 @@ public class DriverController implements DriverControllerIO{
 
         double marcha;
         double invert;
-
-            // marcha = gatilho;
-
-            // if(marcha <= 0){
-            //     marcha *= -1.0;
-            // }
 
             if(activateMarcha()){
                 marcha =  0.7 + (controller.getRightTriggerAxis() - controller.getLeftTriggerAxis());

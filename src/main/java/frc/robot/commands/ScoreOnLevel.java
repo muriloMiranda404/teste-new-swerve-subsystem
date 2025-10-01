@@ -1,8 +1,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.SuperStructure;
-import frc.robot.subsystems.SuperStructure.StatesToScore;
+import frc.robot.subsystems.mechanism.SuperStructure;
+import frc.robot.subsystems.mechanism.SuperStructure.StatesToScore;
 
 public class ScoreOnLevel extends Command{
     

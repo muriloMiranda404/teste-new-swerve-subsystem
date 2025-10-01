@@ -1,8 +1,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ElevatorSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.mechanism.elevator.ElevatorSubsystem;
+import frc.robot.subsystems.mechanism.intake.IntakeSubsystem;
 
 public class IntakePositionCommand extends Command{
     

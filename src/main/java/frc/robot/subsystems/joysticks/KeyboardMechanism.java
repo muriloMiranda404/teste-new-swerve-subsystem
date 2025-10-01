@@ -1,4 +1,4 @@
-package frc.robot.subsystems.utils;
+package frc.robot.subsystems.joysticks;
 
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -10,7 +10,11 @@ public class KeyboardMechanism implements KeyboardIO{
     public static KeyboardMechanism mInstance = null;
 
     public KeyboardMechanism(){
-        this.controller = new CommandXboxController(1);
+        this.controller = new CommandXboxController(2
+        
+        
+        
+        );
     }
 
     public static KeyboardMechanism getInstance(){

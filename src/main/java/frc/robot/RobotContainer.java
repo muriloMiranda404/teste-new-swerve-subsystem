@@ -8,30 +8,24 @@ import frc.robot.Constants.Outros;
 import frc.robot.commands.IntakeSpeedCommand;
 import frc.robot.commands.ResetPigeon;
 import frc.robot.commands.TurnRobot;
-import frc.robot.subsystems.ElevatorSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.LimelightConfig;
-import frc.robot.subsystems.SuperStructure;
-import frc.robot.subsystems.SwerveSubsystem;
-import frc.robot.subsystems.SuperStructure.StatesToScore;
-import frc.robot.subsystems.chooses.Choose;
-import frc.robot.subsystems.utils.DriverController;
-import frc.robot.subsystems.utils.KeyboardMechanism;
-import frc.robot.subsystems.utils.MechanismJoystick;
-
+import frc.robot.subsystems.joysticks.DriverController;
+import frc.robot.subsystems.joysticks.KeyboardMechanism;
+import frc.robot.subsystems.joysticks.MechanismJoystick;
+import frc.robot.subsystems.mechanism.SuperStructure;
+import frc.robot.subsystems.mechanism.SuperStructure.StatesToScore;
+import frc.robot.subsystems.mechanism.intake.IntakeSubsystem;
+import frc.robot.subsystems.swerve.SwerveSubsystem;
+import frc.robot.subsystems.utils.Choose;
 
 public class RobotContainer {
     
   private DriverController driverController;
   private KeyboardMechanism keyBoardControl;
   private MechanismJoystick mechanismJoystick;
-  
-  private LimelightConfig limelightConfig;
-  
+    
   private SwerveSubsystem swerveSubsystem;
    
   private IntakeSubsystem intakeSubsystem;
-  private ElevatorSubsystem elevatorSubsystem;
   
   private SuperStructure superStructure;
 
@@ -42,34 +36,25 @@ public class RobotContainer {
     this.driverController = DriverController.getInstance();
     this.keyBoardControl = KeyboardMechanism.getInstance();
     this.mechanismJoystick = MechanismJoystick.getInstance();
-    
-    this.limelightConfig = LimelightConfig.getInstance();
-    
+        
     this.swerveSubsystem = SwerveSubsystem.getInstance();
     
-    this.elevatorSubsystem = ElevatorSubsystem.getInstance();
     this.intakeSubsystem = IntakeSubsystem.getInstance();
     this.superStructure = SuperStructure.getInstance();
     
     this.choose = Choose.getInstance();
 
-    if(choose.getChoosed() == "arduino"){
-
-      configureKeyBoardMechanismBiding();
+    intakeSubsystem.setDefaultCommand(intakeSubsystem.setJoystickControl(mechanismJoystick.throwCoral()));
     
-    } else if(choose.getChoosed() == "joystick"){
-
-      intakeSubsystem.setDefaultCommand(intakeSubsystem.setJoystickControl(mechanismJoystick.throwCoral()));
-      configureJoystickMechanismBindings();
-    
-    }
-
     swerveSubsystem.setDefaultCommand(swerveSubsystem.driveRobot(
       () -> MathUtil.applyDeadband(driverController.ConfigureInputs(1), Controllers.DEADBAND), 
       () -> MathUtil.applyDeadband(driverController.ConfigureInputs(2), Controllers.DEADBAND), 
       () -> MathUtil.applyDeadband(driverController.ConfigureInputs(3), Controllers.DEADBAND),
       true));
-
+      
+      configureJoystickMechanismBindings();
+      
+      configureKeyBoardMechanismBiding();
       configureDriveBindings();
   }
 

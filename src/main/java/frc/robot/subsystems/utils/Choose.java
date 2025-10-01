@@ -1,6 +1,8 @@
-package frc.robot.subsystems.chooses;
+package frc.robot.subsystems.utils;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Choose {
     
@@ -10,10 +12,12 @@ public class Choose {
 
     private Choose(){
         this.chooser = new SendableChooser<>();
-
-        this.chooser.setDefaultOption("controllers", "");
+        
+        this.chooser.setDefaultOption("controllers", "default");
         this.chooser.addOption("arduino", "arduino");
         this.chooser.addOption("joystick", "joystick");
+        
+        SmartDashboard.putData("chooser", chooser);
     }
 
     public static Choose getInstance(){

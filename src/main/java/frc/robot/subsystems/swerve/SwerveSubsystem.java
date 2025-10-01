@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.swerve;
 
 import java.io.File;
 import java.util.function.DoubleSupplier;
@@ -24,8 +24,9 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.AutonomousCommands;
+//import frc.robot.AutonomousCommands;
 import frc.robot.Constants.swerve;
+import frc.robot.subsystems.vision.LimelightConfig;
 import swervelib.SwerveDrive;
 import swervelib.SwerveModule;
 import swervelib.encoders.SwerveAbsoluteEncoder;
@@ -83,7 +84,7 @@ public class SwerveSubsystem extends SubsystemBase{
     }
 
     private void configureAutoCommands(){
-        AutonomousCommands.configureAllCommands();
+        //AutonomousCommands.configureAllCommands();
     }
 
     @Override
