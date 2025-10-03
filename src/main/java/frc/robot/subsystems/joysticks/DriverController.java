@@ -98,7 +98,7 @@ public class DriverController implements DriverControllerIO{
 
     @Override
     public Trigger alingToReefButton() {
-        return controller.rightBumper();
+        return controller.pov(0);
     }
 
     public Trigger turn45(){

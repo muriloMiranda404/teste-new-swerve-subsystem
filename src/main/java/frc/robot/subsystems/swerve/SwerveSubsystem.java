@@ -24,7 +24,6 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-//import frc.robot.AutonomousCommands;
 import frc.robot.Constants.swerve;
 import frc.robot.subsystems.vision.LimelightConfig;
 import swervelib.SwerveDrive;
@@ -54,7 +53,6 @@ public class SwerveSubsystem extends SubsystemBase{
         } catch(Exception e){
             System.out.println("erro ao criar swerve drive");
         } finally{
-            configureAutoCommands();
             limelightConfig = LimelightConfig.getInstance();
             pigeon2 = new Pigeon2(9);
 
@@ -81,10 +79,6 @@ public class SwerveSubsystem extends SubsystemBase{
             mInstance = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(), "swerve"));
         }
         return mInstance;
-    }
-
-    private void configureAutoCommands(){
-        //AutonomousCommands.configureAllCommands();
     }
 
     @Override

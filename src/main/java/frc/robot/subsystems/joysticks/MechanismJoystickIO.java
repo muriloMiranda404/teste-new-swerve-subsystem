@@ -19,4 +19,8 @@ public interface MechanismJoystickIO {
     Trigger Algae_L3();
 
     double throwCoral();
+
+    double getRightTrigger();
+
+    double getLeftTrigger();
 }

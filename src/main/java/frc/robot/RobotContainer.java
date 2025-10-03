@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Constants.Controllers;
 import frc.robot.Constants.Outros;
+import frc.robot.Constants.swerve;
+import frc.robot.commands.AlingToTarget;
 import frc.robot.commands.IntakeSpeedCommand;
 import frc.robot.commands.ResetPigeon;
 import frc.robot.commands.TurnRobot;
@@ -15,10 +17,11 @@ import frc.robot.subsystems.mechanism.SuperStructure;
 import frc.robot.subsystems.mechanism.SuperStructure.StatesToScore;
 import frc.robot.subsystems.mechanism.intake.IntakeSubsystem;
 import frc.robot.subsystems.swerve.SwerveSubsystem;
-import frc.robot.subsystems.utils.Choose;
 
 public class RobotContainer {
     
+  private AutonomousCommands autonomousCommands;
+
   private DriverController driverController;
   private KeyboardMechanism keyBoardControl;
   private MechanismJoystick mechanismJoystick;
@@ -29,10 +32,11 @@ public class RobotContainer {
   
   private SuperStructure superStructure;
 
-  private Choose choose;
-
   public RobotContainer() {
-        
+
+    this.autonomousCommands = new AutonomousCommands();
+    configureAuto();
+    
     this.driverController = DriverController.getInstance();
     this.keyBoardControl = KeyboardMechanism.getInstance();
     this.mechanismJoystick = MechanismJoystick.getInstance();
@@ -41,21 +45,20 @@ public class RobotContainer {
     
     this.intakeSubsystem = IntakeSubsystem.getInstance();
     this.superStructure = SuperStructure.getInstance();
-    
-    this.choose = Choose.getInstance();
-
-    intakeSubsystem.setDefaultCommand(intakeSubsystem.setJoystickControl(mechanismJoystick.throwCoral()));
-    
+        
     swerveSubsystem.setDefaultCommand(swerveSubsystem.driveRobot(
       () -> MathUtil.applyDeadband(driverController.ConfigureInputs(1), Controllers.DEADBAND), 
       () -> MathUtil.applyDeadband(driverController.ConfigureInputs(2), Controllers.DEADBAND), 
       () -> MathUtil.applyDeadband(driverController.ConfigureInputs(3), Controllers.DEADBAND),
-      true));
+      swerve.FIELD_ORIENTED));
       
       configureJoystickMechanismBindings();
-      
       configureKeyBoardMechanismBiding();
       configureDriveBindings();
+  }
+
+  private void configureAuto(){
+    autonomousCommands.configureAllCommands();
   }
 
   private void configureJoystickMechanismBindings(){
@@ -91,10 +94,13 @@ public class RobotContainer {
     driverController.resetPigeon().onTrue(new ResetPigeon());
 
     driverController.turn45().onTrue(new TurnRobot( 45));
+
     driverController.turn315().onTrue(new TurnRobot(-45));    
+  
+    driverController.alingToReefButton().whileTrue(new AlingToTarget(true));
   }
   
- public Command getAutonomousCommand() {
+  public Command getAutonomousCommand() {
     return swerveSubsystem.getAutonomousCommand(Outros.AUTO, true);
   }
 

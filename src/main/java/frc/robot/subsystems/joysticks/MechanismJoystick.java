@@ -58,4 +58,14 @@ public class MechanismJoystick implements MechanismJoystickIO{
     public double throwCoral(){
         return controller.getRightTriggerAxis() - controller.getLeftTriggerAxis();
     }
+
+    @Override
+    public double getRightTrigger(){
+        return controller.getRightTriggerAxis();
+    }
+
+    @Override
+    public double getLeftTrigger(){
+        return controller.getLeftTriggerAxis();
+    }
 }

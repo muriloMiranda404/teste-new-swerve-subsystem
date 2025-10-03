@@ -1,23 +1,28 @@
 package frc.robot;
 
- import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.events.EventTrigger;
 
- import frc.robot.subsystems.mechanism.SuperStructure;
- import frc.robot.subsystems.mechanism.SuperStructure.StatesToScore;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.subsystems.mechanism.SuperStructure;
+import frc.robot.subsystems.mechanism.SuperStructure.StatesToScore;
 
  public class AutonomousCommands{
 
-   private static SuperStructure superStructure;
+   private SuperStructure superStructure;
 
    public AutonomousCommands(){
-     AutonomousCommands.superStructure = SuperStructure.getInstance();
+     this.superStructure = SuperStructure.getInstance();
    }
 
-   public static void configureAllCommands(){
-     configureCoral(AutonomousCommands.superStructure);
+   public void configureAllCommands(){
+     configureCoral(this.superStructure);
    }
 
-   private static void configureCoral(SuperStructure superStructure){
-     NamedCommands.registerCommand("L2", superStructure.ScoreRobot(StatesToScore.L2));
-   }
+   private void configureCoral(SuperStructure superStructure){
+
+    NamedCommands.registerCommand("TESTE", new InstantCommand(() -> superStructure.ScoreRobot(StatesToScore.L2)));
+
+    new EventTrigger("TESTE").onTrue(new InstantCommand(() -> superStructure.ScoreRobot(StatesToScore.L2)));
+  }
 }

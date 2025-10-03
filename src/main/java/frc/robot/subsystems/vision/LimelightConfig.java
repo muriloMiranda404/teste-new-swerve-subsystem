@@ -24,7 +24,7 @@ public class LimelightConfig {
     }
 
     public boolean getHasTarget(){
-        return limelight.getEntry("tv").getDouble(0)==1;
+        return limelight.getEntry("tv").getDouble(0 )== 1;
     }
 
     public double getTagId(){
@@ -69,6 +69,10 @@ public class LimelightConfig {
         }
     
     public double[] getAprilTagCordenates(){
-        return limelight.getEntry("targetpose_robotspace").getDoubleArray(new double[6]);
-    }    
+        return limelight.getEntry("camerapose_robotspace").getDoubleArray(new double[6]);
     }
+    
+    public double[] getCameraTarget(){
+        return limelight.getEntry("camerapose_robotspace_set").getDoubleArray(new double[6]);
+    }
+}

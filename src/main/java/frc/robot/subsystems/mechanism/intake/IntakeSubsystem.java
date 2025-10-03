@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.Intake;
+import frc.robot.subsystems.joysticks.MechanismJoystick;
 import frc.robot.subsystems.mechanism.elevator.ElevatorSubsystem;
 
 public class IntakeSubsystem extends SubsystemBase{
@@ -26,6 +27,8 @@ public class IntakeSubsystem extends SubsystemBase{
     boolean outputIsMoreThan0;
 
     ElevatorSubsystem elevatorSubsystem;
+
+    MechanismJoystick joystick = MechanismJoystick.getInstance();
 
     public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
@@ -132,6 +135,6 @@ public class IntakeSubsystem extends SubsystemBase{
 
     @Override
     public void periodic() {
-        // System.out.println("setpoint do intake: " + intakeSubsystem.getSetpoint());
+        setSpeed(joystick.getRightTrigger()-joystick.getLeftTrigger());
     }
 }
