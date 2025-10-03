@@ -8,10 +8,13 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.path.PathPlannerPath;
+
 import edu.wpi.first.math.controller.HolonomicDriveController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -100,48 +103,47 @@ public class SwerveSubsystem extends SubsystemBase{
         swerveDrive.zeroGyro();
     }
 
-        public void setupPathPlanner(){
-
-            RobotConfig config;
-            try{
-              config = RobotConfig.fromGUISettings();
-              
-              boolean feedforwards = true;
-              
-              AutoBuilder.configure(
-                    this::getPose,
-                    this::resetOdometry, 
-                    this::getRobotRelativeSpeeds, 
-                    (speeds, feedforward) -> {
-                      if (feedforwards)
-                      {
-                        swerveDrive.drive(
-                            speeds,
-                            swerveDrive.kinematics.toSwerveModuleStates(speeds),
-                            feedforward.linearForces()
-                                         );
-                      } else
-                      {
-                        swerveDrive.setChassisSpeeds(speeds);
-                      }}, 
-                      new PPHolonomicDriveController(
-                        new PIDConstants(0.15, 0.0, 0.0), 
-                        new PIDConstants(0.6, 0.0, 0.0)),
-                      config, 
-                      () -> {
-                        
-                      var alliance = DriverStation.getAlliance();
-                      if (alliance.isPresent()) {
-                        return alliance.get() == DriverStation.Alliance.Red;
-                      }
-                      return false;
-                    },
-                    this 
-                    );
-                  } catch (Exception e) {
-                    e.printStackTrace();
-                  }
-          }
+    public void setupPathPlanner(){
+        RobotConfig config;
+        try{
+            config = RobotConfig.fromGUISettings();
+            
+            boolean feedforwards = true;
+            
+            AutoBuilder.configure(
+                this::getPose,
+                this::resetOdometry, 
+                this::getRobotRelativeSpeeds, 
+                (speeds, feedforward) -> {
+                    if (feedforwards)
+                    {
+                    swerveDrive.drive(
+                        speeds,
+                        swerveDrive.kinematics.toSwerveModuleStates(speeds),
+                        feedforward.linearForces()
+                                        );
+                    } else
+                    {
+                    swerveDrive.setChassisSpeeds(speeds);
+                    }}, 
+                    new PPHolonomicDriveController(
+                    new PIDConstants(0.15, 0.0, 0.0), 
+                    new PIDConstants(0.6, 0.0, 0.0)),
+                    config, 
+                    () -> {
+                    
+                    var alliance = DriverStation.getAlliance();
+                    if (alliance.isPresent()) {
+                    return alliance.get() == DriverStation.Alliance.Red;
+                    }
+                    return false;
+                },
+                this 
+                );
+                } catch (Exception e) {
+                e.printStackTrace();
+                }
+        }
 
     public void resetOdometry(Pose2d pose2d){
         swerveDrive.resetOdometry(pose2d);
@@ -218,7 +220,7 @@ public class SwerveSubsystem extends SubsystemBase{
 
     public Command driveRobot(DoubleSupplier x, DoubleSupplier y, DoubleSupplier omega, boolean fieldOriented){
         return run(() ->{
-    
+        
         double td = 0.002;
         ChassisSpeeds speed = fieldOriented == true ? ChassisSpeeds.fromFieldRelativeSpeeds(x.getAsDouble() * swerveDrive.getMaximumChassisVelocity(), 
                                                                                             y.getAsDouble() * swerveDrive.getMaximumChassisVelocity(),
@@ -230,8 +232,8 @@ public class SwerveSubsystem extends SubsystemBase{
                                                                                                               omega.getAsDouble());
 
 
+                                                                                                              
         ChassisSpeeds distrize = ChassisSpeeds.discretize(speed, td);
-
         state = swerveDrive.kinematics.toSwerveModuleStates(distrize);
         SwerveDriveKinematics.desaturateWheelSpeeds(state, swerve.MAX_SPEED);
     
@@ -263,6 +265,7 @@ public class SwerveSubsystem extends SubsystemBase{
         if(setOdomToStart){
             return AutoBuilder.buildAuto(pathName);
         }
+        System.out.println("erro");
         return new PathPlannerAuto(pathName);
     }
 }

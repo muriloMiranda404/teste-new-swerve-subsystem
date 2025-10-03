@@ -26,6 +26,8 @@ public class SuperStructure extends SubsystemBase{
         this.elevatorSubsystem = ElevatorSubsystem.getInstance();
         this.intakeSubsystem = IntakeSubsystem.getInstance();
         this.ledSubsystem = LedSubsystem.getInstance();
+        this.elevatorInput = ElevatorPositions.HOME;
+        this.intakeInput = IntakePositions.DEFAULT_POSITION;
         this.color = new Color();
     }
 
