@@ -68,10 +68,10 @@ public class SwerveSubsystem extends SubsystemBase{
             rotationPID = new ProfiledPIDController(0.01, 0, 0, new TrapezoidProfile.Constraints(Math.PI, Math.PI));//rotação
             drivePID = new HolonomicDriveController(xPID, yPID, rotationPID);
 
-            xPID.setTolerance(0.01);
-            yPID.setTolerance(0.2);
-            rotationPID.setTolerance(0.2);
             drivePID.setEnabled(true);
+            yPID.setTolerance(0.2);
+            xPID.setTolerance(0.01);
+            rotationPID.setTolerance(0.2);
 
             setupPathPlanner();
         }
@@ -115,13 +115,12 @@ public class SwerveSubsystem extends SubsystemBase{
                 this::resetOdometry, 
                 this::getRobotRelativeSpeeds, 
                 (speeds, feedforward) -> {
-                    if (feedforwards)
-                    {
+                    if (feedforwards) {
                     swerveDrive.drive(
                         speeds,
                         swerveDrive.kinematics.toSwerveModuleStates(speeds),
                         feedforward.linearForces()
-                                        );
+                    );
                     } else
                     {
                     swerveDrive.setChassisSpeeds(speeds);
@@ -131,12 +130,11 @@ public class SwerveSubsystem extends SubsystemBase{
                     new PIDConstants(0.6, 0.0, 0.0)),
                     config, 
                     () -> {
-                    
-                    var alliance = DriverStation.getAlliance();
-                    if (alliance.isPresent()) {
-                    return alliance.get() == DriverStation.Alliance.Red;
-                    }
-                    return false;
+                        var alliance = DriverStation.getAlliance();
+                        if (alliance.isPresent()) {
+                        return alliance.get() == DriverStation.Alliance.Red;
+                        }
+                        return false;
                 },
                 this 
                 );
@@ -265,7 +263,6 @@ public class SwerveSubsystem extends SubsystemBase{
         if(setOdomToStart){
             return AutoBuilder.buildAuto(pathName);
         }
-        System.out.println("erro");
         return new PathPlannerAuto(pathName);
     }
 }

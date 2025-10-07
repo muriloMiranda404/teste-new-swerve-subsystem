@@ -98,6 +98,8 @@ public class SuperStructure extends SubsystemBase{
                         this.elevatorInput = ElevatorPositions.L2;
                         color = Color.kYellow;
                     }
+
+                    System.out.println("acabou o elevador");
                     break;
 
                 case L3:

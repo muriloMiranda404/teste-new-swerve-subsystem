@@ -17,7 +17,7 @@ public class Constants{
   }
 
   public static final class swerve{
-    public static final double MAX_SPEED = 2.0;
+    public static final double MAX_SPEED = 6.0;
 
     public static final boolean FIELD_ORIENTED = true;
   }
@@ -70,7 +70,7 @@ public class Constants{
   }
 
   public static final class Outros{
-    public static final String AUTO = "teste";
+    public static final String AUTO = "nada";
     public static final String LIMELIGHT = "limelight";
     public static final int PIGEON = 9;
   }

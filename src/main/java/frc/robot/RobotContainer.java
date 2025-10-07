@@ -52,9 +52,9 @@ public class RobotContainer {
       () -> MathUtil.applyDeadband(driverController.ConfigureInputs(3), Controllers.DEADBAND),
       swerve.FIELD_ORIENTED));
       
-      configureJoystickMechanismBindings();
-      configureKeyBoardMechanismBiding();
       configureDriveBindings();
+      configureKeyBoardMechanismBiding();
+      configureJoystickMechanismBindings();
   }
 
   private void configureAuto(){
