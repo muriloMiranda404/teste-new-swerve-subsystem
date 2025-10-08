@@ -9,6 +9,98 @@
           "data": {
             "pathName": "L2"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L2"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SOLTAR"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "autonomos bom"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SOLTAR"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "L1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PEGAR"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "L21"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L3"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SOLTAR"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "L1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PEGAR"
+                }
+              }
+            ]
+          }
         }
       ]
     }

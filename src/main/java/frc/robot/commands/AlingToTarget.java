@@ -25,34 +25,21 @@ public class AlingToTarget extends Command {
     private static final double kD_ROTATION = 0.0;
     // private static final double kI_ROTATION = 0.01;
     // private static final double kD_ROTATION = 0.005;
-    private static final double kP_X = 0.25;
-    private static final double kI_X = 0.01;
-    private static final double kD_X = 0.005;
-    private static final double kP_Y = 0.25;
+    private static final double kP_X = 0.48;
+    private static final double kI_X = 0.0;
+    private static final double kD_X = 0.0;
+    
+    private static final double kP_Y = 0.455;
     private static final double kI_Y = 0.01;
     private static final double kD_Y = 0.005;
 
-    // private static final double kP_ROTATION = 0;
-    // private static final double kI_ROTATION = 0.0;
-    // private static final double kD_ROTATION = 0.0;
-    // private static final double kP_X = 0.0;
-    // private static final double kI_X = 0.0;
-    // private static final double kD_X = 0.0;
-    // private static final double kP_Y = 0.0;
-    // private static final double kI_Y = 0.0;
-    // private static final double kD_Y = 0.0;
-
-    // private static final double TOLERANCIA_ROTATION = 0.0;
-    // private static final double TOLERANCIA_X = 0.0;
-    // private static final double TOLERANCIA_Y = 0.0;
-
-    private static final double TOLERANCIA_ROTATION = 0.2;
+    private static final double TOLERANCIA_ROTATION = 0.05;
     private static final double TOLERANCIA_X = 0.05;
     private static final double TOLERANCIA_Y = 0.05;
 
-    private static final double MAX_CORRECAO = 2.0;
+    private static final double MAX_CORRECAO = 0.7;
     private static final double ZONA_MORTA = 0.02;
-    private static final double TIMEOUT_SECONDS = 5.0;
+    private static final double TIMEOUT_SECONDS = 7.0;
     private static final double TEMPO_MINIMO_ESTAVEL = 0.2;
 
     private double ultimaTx = 0.0;
@@ -62,7 +49,7 @@ public class AlingToTarget extends Command {
         this(setpointX, setpointY, false);
     }
 
-    public AlingToTarget(boolean automaticSetpoint) {
+    public AlingToTarget() {
         this(0, 0, true);
     }
 
@@ -92,8 +79,8 @@ public class AlingToTarget extends Command {
             double ty = coords[1];
 
             if (!Double.isNaN(tx) && !Double.isNaN(ty)) {
-                this.setpointX = 0.60;
-                this.setpointY = 0.70;
+                this.setpointX = tx;
+                this.setpointY = ty - 0.4;
             } else {
                 System.out.println("Valores inválidos da Limelight, mantendo setpoints existentes.");
             }
@@ -133,9 +120,9 @@ public class AlingToTarget extends Command {
         ultimaTx = tx;
 
         if (timer.get() - ultimoTempoMudanca > TEMPO_MINIMO_ESTAVEL) {
-            double correcaoRot = rotationController.calculate(tx, setpointX);
             double correcaoX = xController.calculate(tx, setpointX);
             double correcaoY = yController.calculate(ty, setpointY);
+            double correcaoRot = rotationController.calculate(tx, setpointX);
 
             // Zona morta
             if (Math.abs(correcaoRot) < ZONA_MORTA) correcaoRot = 0;
@@ -147,8 +134,8 @@ public class AlingToTarget extends Command {
             correcaoX = Math.min(Math.max(correcaoX, -MAX_CORRECAO), MAX_CORRECAO);
             correcaoY = Math.min(Math.max(correcaoY, -MAX_CORRECAO), MAX_CORRECAO);
 
-            Translation2d translation = new Translation2d(-correcaoX, correcaoY);
-            subsystem.drive(translation, correcaoRot, true);
+            Translation2d translation2d = new Translation2d(correcaoY, -correcaoX);
+            subsystem.drive(translation2d, -correcaoRot, true);
         }
     }
 

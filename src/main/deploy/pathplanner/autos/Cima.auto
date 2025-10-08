@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "ida centro"
+                  "pathName": "Cima"
                 }
               },
               {
@@ -23,7 +23,7 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 3.0
+                  "waitTime": 4.0
                 }
               },
               {
@@ -33,34 +33,28 @@
                 }
               },
               {
-                "type": "wait",
-                "data": {
-                  "waitTime": 3.0
-                }
-              },
-              {
                 "type": "path",
                 "data": {
-                  "pathName": "getCoral"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "PEGAR"
+                  "pathName": "Cima 2"
                 }
               },
               {
-                "type": "named",
+                "type": "parallel",
                 "data": {
-                  "name": "L1"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "L1"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "PEGAR"
+                      }
+                    }
+                  ]
                 }
               }
             ]

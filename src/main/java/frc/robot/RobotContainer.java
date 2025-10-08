@@ -40,7 +40,7 @@ public class RobotContainer {
     this.driverController = DriverController.getInstance();
     this.keyBoardControl = KeyboardMechanism.getInstance();
     this.mechanismJoystick = MechanismJoystick.getInstance();
-        
+    
     this.swerveSubsystem = SwerveSubsystem.getInstance();
     
     this.intakeSubsystem = IntakeSubsystem.getInstance();
@@ -52,9 +52,9 @@ public class RobotContainer {
       () -> MathUtil.applyDeadband(driverController.ConfigureInputs(3), Controllers.DEADBAND),
       swerve.FIELD_ORIENTED));
       
-      configureDriveBindings();
-      configureKeyBoardMechanismBiding();
-      configureJoystickMechanismBindings();
+    configureDriveBindings();
+    configureKeyBoardMechanismBiding();
+    configureJoystickMechanismBindings();
   }
 
   private void configureAuto(){
@@ -97,7 +97,7 @@ public class RobotContainer {
 
     driverController.turn315().onTrue(new TurnRobot(-45));    
   
-    driverController.alingToReefButton().whileTrue(new AlingToTarget(true));
+    driverController.alingToReefButton().whileTrue(new AlingToTarget());
   }
   
   public Command getAutonomousCommand() {

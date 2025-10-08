@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.7800204918032705,
-        "y": 3.959
+        "x": 6.8449795081967215,
+        "y": 3.9350922131147543
       },
       "isLocked": false,
       "linkedName": null
@@ -20,8 +20,8 @@
         "y": 3.959
       },
       "prevControl": {
-        "x": 6.97,
-        "y": 3.959
+        "x": 5.720852444570358,
+        "y": 3.938372454740474
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,8 +33,14 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "L2",
-      "waypointRelativePos": 1.0,
+      "name": "L3",
+      "waypointRelativePos": 0.5006738544474698,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "SOLTAR",
+      "waypointRelativePos": 0.9561994609164105,
       "endWaypointRelativePos": null,
       "command": null
     }
@@ -49,13 +55,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": "New Folder",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

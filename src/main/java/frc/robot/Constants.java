@@ -70,7 +70,7 @@ public class Constants{
   }
 
   public static final class Outros{
-    public static final String AUTO = "nada";
+    public static final String AUTO = "trajetoria";
     public static final String LIMELIGHT = "limelight";
     public static final int PIGEON = 9;
   }

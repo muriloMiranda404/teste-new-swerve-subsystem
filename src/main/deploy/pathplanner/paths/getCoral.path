@@ -8,7 +8,7 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.97,
+        "x": 5.72,
         "y": 3.959
       },
       "isLocked": false,
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "L3",
-      "waypointRelativePos": 0.7535449020931428,
+      "name": "L1",
+      "waypointRelativePos": 0.7109164420485365,
       "endWaypointRelativePos": null,
       "command": null
     }
@@ -48,14 +48,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 1.0,
     "rotation": 136.94148639091443
   },
   "reversed": false,
   "folder": "New Folder",
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": 176.09310257589613
+    "velocity": 1.0,
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

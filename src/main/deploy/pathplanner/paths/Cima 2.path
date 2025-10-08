@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.478,
-        "y": 4.055
+        "x": 5.375,
+        "y": 5.048550477489767
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.392701227830832,
-        "y": 4.426040245566165
+        "x": 6.117360163710779,
+        "y": 4.653495907230559
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.2330491132332881,
-        "y": 7.023823328785811
+        "x": 1.72387448840382,
+        "y": 7.215364938608458
       },
       "prevControl": {
-        "x": 1.0654502046384722,
-        "y": 7.382963847203273
+        "x": 1.3867822355839934,
+        "y": 7.3799913378801225
       },
       "nextControl": null,
       "isLocked": false,
@@ -34,31 +34,21 @@
   "eventMarkers": [
     {
       "name": "SOLTAR",
-      "waypointRelativePos": 0.0,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "L2"
-        }
-      }
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": 0.5,
+      "command": null
     },
     {
       "name": "L1",
-      "waypointRelativePos": 0.6,
+      "waypointRelativePos": 0.5006738544474099,
       "endWaypointRelativePos": null,
       "command": null
     },
     {
       "name": "PEGAR",
-      "waypointRelativePos": 0.6758760107816815,
+      "waypointRelativePos": 0.6300539083558189,
       "endWaypointRelativePos": null,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "SOLTAR"
-        }
-      }
+      "command": null
     }
   ],
   "globalConstraints": {
@@ -71,13 +61,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -48.88992047887443
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "New Folder",
   "idealStartingState": {
     "velocity": 2.0,
-    "rotation": 0.0
+    "rotation": -126.254
   },
   "useDefaultConstraints": true
 }
